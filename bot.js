@@ -1,19 +1,15 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const hero = new Discord.Client();
-const fs = require("fs");
-const Canvas = require("canvas");
-const jimp = require("jimp");
+const convert = require("hh-mm-ss")
+const dateFormat = require('dateformat');
+const fs = require('fs');
+const pretty = require('pretty-ms');
+const rn = require('random-number');
 const moment = require('moment');
-const yt = require('ytdl-core');
-const https = require('https');
-const fetch = require('node-fetch');
-const sql = require('sqlite')
-const ms = require("ms");
-const path = require('path');
- const pretty = require('pretty-ms') 
-,ti={}  
-,spee={};
+var Canvas = require('canvas')
+var jimp = require('jimp')
+        const ms = require("ms");
+let done = {};
 const prefix = '~'
 
 //best
@@ -296,7 +292,7 @@ client.on('message',message =>{
   });
 
 client.on('message', message => {
-  if (message.content.startsWith ("$invites")) {
+  if (message.content.startsWith ("~invites")) {
    if(!message.channel.guild) return message.reply('** This command only for servers **');
        var mentionned = message.mentions.users.first();
       var os;
