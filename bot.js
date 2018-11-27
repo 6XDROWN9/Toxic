@@ -268,3 +268,5 @@ if(message.channel.type === 'dm') return
     });
   }
 });
+
+client.login(process.env.TOKEN);
