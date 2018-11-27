@@ -269,4 +269,61 @@ if(message.channel.type === 'dm') return
   }
 });
 
+client.on('message',message =>{
+    if(message.content.startsWith(prefix + 'topinvites')) {
+  message.guild.fetchInvites().then(i =>{
+  var invites = [];
+   
+  i.forEach(inv =>{
+    var [invs,i]=[{},null];
+     
+    if(inv.maxUses){
+        invs[inv.code] =+ inv.uses+"/"+inv.maxUses;
+    }else{
+        invs[inv.code] =+ inv.uses;
+    }
+        invites.push(`invite: ${inv.url} inviter: ${inv.inviter} \`${invs[inv.code]}\`;`);
+   
+  });
+  var embed = new Discord.RichEmbed()
+  .setColor("#000000")
+  .setDescription(`${invites.join(`\n`)+'\n\n**By:** '+message.author}`)
+           message.channel.send({ embed: embed });
+   
+  });
+   
+    }
+  });
+
+client.on('message', message => {
+  if (message.content.startsWith ("$invites")) {
+   if(!message.channel.guild) return message.reply('** This command only for servers **');
+       var mentionned = message.mentions.users.first();
+      var os;
+    if(mentionned){
+        var os = mentionned.id;
+    } else {
+        var os = message.author.id;
+        
+    }
+        var oss;
+    if(mentionned){
+        var oss = mentionned;
+    } else {
+        var oss = message.author;
+        
+    }
+message.guild.fetchInvites()
+.then(invites =>{
+if(!invites.find(invite => invite.inviter.id === `${os}`)) return message.channel.send(`**${oss.username}, Does't Have Invites :x:**`);
+message.channel.send(`**__${invites.find(invite => invite.inviter.id === `${os}`).uses}__ Member Joined By ${oss.username} !** :chart_with_upwards_trend: `)
+
+})
+
+
+
+}
+
+});
+
 client.login(process.env.TOKEN);
